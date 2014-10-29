@@ -5,6 +5,8 @@
 	<meta charset="UTF-8" />
 	<title>GPS-ware Order Form</title>
 	<link href="css/gps.css" rel="stylesheet" />
+	<script type="" src="js/form.js"></script>
+
 </head>
 
 <body>
@@ -35,9 +37,9 @@
   <div id="main">
 		<p id="logo"><img src="images/gpsware.jpg" alt="GPS-ware" /></p>
 		<h1>Order Form</h1>
-		<form id="orders" method="post" action="done.htm">
+		<form id="orders" method="post" action="done.html">
 			<p id="datep">
-				<input class="text" id="date" name="date" size="11" value="mm-dd-yyyy" tabindex="-1" readonly="readonly" />
+				<input class="text" id="date" name="date" size="11" tabindex="-1" readonly="readonly" />
 			</p>
 
 			<fieldset>
@@ -97,10 +99,10 @@
 					<tr>
 						<td class="col3" colspan="3">
 							<select id="shipping" name="shipping">
-								<option value="0">Choose a shipping option</option>
-								<option value="4.95">Standard (4-6 business days) $4.95</option>
-								<option value="8.95">Express (2 days) $8.95</option>
-								<option value="12.95">Next Day (1 day) $12.95</option>
+								<option id="shipChoose" value="0">Choose a shipping option</option>
+								<option id="shipStandard" value="4.95">Standard (4-6 business days) $4.95</option>
+								<option id="shipExpress" value="8.95">Express (2 days) $8.95</option>
+								<option id="ship1day" value="12.95">Next Day (1 day) $12.95</option>
 							</select>
 						</td>
 						<td>
@@ -117,8 +119,8 @@
 	  </fieldset>
 
 	  <p id="pbuttons">
-		<input type="reset" value="Reset" />
-		<input type="submit" value="Submit Order" />
+		<input type="button" value="Reset" onclick="resetForm();" />
+		<input type="submit" value="Submit Order" onclick="validateForm();" />
 	  </p>
 		</form>
   </div>

@@ -35,8 +35,79 @@
    resetForm()
       Resets the Web form and Web page
 */
+window.onload = function(){
+   //Globals 
 
-function todayTxt() {
-   var today = new Date();
-   return today.getMonth() + 1 + "-" + today.getDate() + "-" + today.getFullYear();
+   var form = document.getElementById("orders"),
+   shippingOption = document.getElementById("shipping"),
+   shipChoice = document.getElementById("shipcost"),
+   today = new Date(),
+   display = document.getElementById("date");
+
+   function todayTxt() {
+      display.value = today.getMonth() + 1 + "-" + today.getDate() + "-" + today.getFullYear();
+   }
+
+   function productCosts(){
+         for(var i = 1;i <= 3;i++){
+          var qty = document.getElementById("qty"+[i]).value,
+          price = document.getElementById("price"+[i]).value,
+          cost = document.getElementById("cost"+[i]);
+          cost.value = (qty * price).toFixed(2);
+         }
+   }
+
+   function shipExpense(){
+         if (shippingOption.value === '4.95'){
+            shipChoice.value = 4.95;
+         }else if(shippingOption.value === '8.95'){
+            shipChoice.value = 8.95;
+         }else if(shippingOption.value === '12.95'){
+            shipChoice.value = 12.95;
+         }else{
+               // default behaviour
+             shipChoice.value = '0.00';
+         }
+   }
+
+   function calcTotal(){
+    
+   }
+
+   function calcShipping(){
+      
+   }
+
+   function calcCost(){
+      for(var i = 1;i <= 3;i++){
+         var tax = document.getElementById("tax");
+         var cost = document.getElementById("cost"+[i]);
+         cost += parseInt(cost.value);
+         tax.value = (cost * 0.05).toFixed(2);
+      }
+   }
+
+   function validateForm(){
+
+   }
+
+   function resetForm(){
+      
+      todayTxt();
+      form.reset();
+   }
+
+   function initForm(){
+      //Display Date
+      todayTxt();
+   }
+
+   form.onchange = function(){
+      productCosts();
+      calcCost();
+      shipExpense();
+   }
+
+   //initialize the form after everything has loaded.
+   initForm();
 }
