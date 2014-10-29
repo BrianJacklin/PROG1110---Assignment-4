@@ -42,7 +42,8 @@ window.onload = function(){
    shippingOption = document.getElementById("shipping"),
    shipChoice = document.getElementById("shipcost"),
    today = new Date(),
-   display = document.getElementById("date");
+   display = document.getElementById("date"),
+   total = document.getElementById("total");
 
    function todayTxt() {
       display.value = today.getMonth() + 1 + "-" + today.getDate() + "-" + today.getFullYear();
