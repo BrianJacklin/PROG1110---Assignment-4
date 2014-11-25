@@ -38,7 +38,7 @@
 window.onload = function(){
    //Globals 
 
-   var form = document.getElementById("orders"),
+   var orders = document.getElementById("orders"),
    shippingOption = document.getElementById("shipping"),
    shipChoice = document.getElementById("shipcost"),
    today = new Date(),
@@ -51,9 +51,9 @@ window.onload = function(){
 
    function productCosts(){
          for(var i = 1;i <= 3;i++){
-          var qty = document.getElementById("qty"+[i]).value,
-          price = document.getElementById("price"+[i]).value,
-          cost = document.getElementById("cost"+[i]);
+          var qty = document.getElementById("qty"+i).value,
+          price = document.getElementById("price"+i).value,
+          cost = document.getElementById("cost"+i);
           cost.value = (qty * price).toFixed(2);
          }
    }
@@ -66,24 +66,25 @@ window.onload = function(){
          }else if(shippingOption.value === '12.95'){
             shipChoice.value = 12.95;
          }else{
-               // default behaviour
-             shipChoice.value = '0.00';
+            // default behaviour
+            shipChoice.value = '0.00';
          }
    }
 
    function calcTotal(){
-    
+
    }
 
    function calcShipping(){
-      
+        
    }
 
    function calcCost(){
       for(var i = 1;i <= 3;i++){
          var tax = document.getElementById("tax");
-         var cost = document.getElementById("cost"+[i]);
-         cost += parseInt(cost.value);
+         var cost = document.getElementById("cost"+i);
+         cost += cost.value;
+         console.log(cost);
          tax.value = (cost * 0.05).toFixed(2);
       }
    }
@@ -92,10 +93,10 @@ window.onload = function(){
 
    }
 
-   function resetForm(){
-      
+   function resetForm(){     
       todayTxt();
-      form.reset();
+      orders.reset();
+      window.reload();
    }
 
    function initForm(){
@@ -103,7 +104,7 @@ window.onload = function(){
       todayTxt();
    }
 
-   form.onchange = function(){
+   orders.onchange = function(){
       productCosts();
       calcCost();
       shipExpense();
