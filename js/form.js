@@ -37,25 +37,27 @@
 */
 window.onload = function(){
    //Globals 
-
-   var orders = document.getElementById("orders"),
-   shippingOption = document.getElementById("shipping"),
-   shipChoice = document.getElementById("shipcost"),
-   today = new Date(),
-   display = document.getElementById("date"),
-   total = document.getElementById("total");
+   var $              = function(id){return document.getElementById(id);},
+       orders         = $("orders"),
+       shippingOption = $("shipping"),
+       shipChoice     = $("shipcost"),
+       today          = new Date(),
+       display        = $("date"),
+       taxRate        = 0.05,
+       total          = $("total");
 
    function todayTxt() {
       display.value = today.getMonth() + 1 + "-" + today.getDate() + "-" + today.getFullYear();
    }
 
    function productCosts(){
-         for(var i = 1;i <= 3;i++){
-          var qty = document.getElementById("qty"+i).value,
-          price = document.getElementById("price"+i).value,
-          cost = document.getElementById("cost"+i);
-          cost.value = (qty * price).toFixed(2);
-         }
+      for(var i = 1;i <= 3;i++){
+       var qty = $("qty"+i).value,
+       price = $("price"+i).value,
+       cost = $("cost"+i);
+
+       cost.value = (qty * price).toFixed(2);
+      }
    }
 
    function shipExpense(){
@@ -72,44 +74,61 @@ window.onload = function(){
    }
 
    function calcTotal(){
+      for(var i = 1,j = 0,amount = 0;i <= 3;i++){
+         var tax = $("tax");
+         var cost = [$("cost"+i).value];
 
+         amount += parseFloat(cost[j]);
+         total.value = (parseFloat(amount.toFixed(2)) + parseFloat(tax.value) + parseFloat(shipChoice.value)).toFixed(2);
+      } 
    }
 
+// TO DO
    function calcShipping(){
         
    }
 
    function calcCost(){
-      for(var i = 1;i <= 3;i++){
-         var tax = document.getElementById("tax");
-         var cost = document.getElementById("cost"+i);
-         cost += cost.value;
-         console.log(cost);
-         tax.value = (cost * 0.05).toFixed(2);
+      for(var i = 1,j = 0,amount = 0;i <= 3;i++){
+         var tax = $("tax");
+         var cost = [$("cost"+i).value];
+
+         amount += parseFloat(cost[j]);
+         tax.value = (amount * taxRate).toFixed(2);
       }
    }
 
+// TO DO
    function validateForm(){
-
+      console.log("validated");
    }
 
-   function resetForm(){     
-      todayTxt();
-      orders.reset();
-      window.reload();
+   $("submit").onclick = function(){
+      validateForm();
    }
 
-   function initForm(){
-      //Display Date
-      todayTxt();
+// TO DO
+   function resetForm(){
+      console.log('reset');
+   }
+
+   $("reset").onclick = function(){
+      resetForm();
    }
 
    orders.onchange = function(){
       productCosts();
       calcCost();
       shipExpense();
+      calcTotal();
+            todayTxt();
+
    }
 
+   function initForm(){
+      //Display Date
+      todayTxt();
+   }
    //initialize the form after everything has loaded.
    initForm();
 }
