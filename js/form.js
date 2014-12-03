@@ -112,26 +112,26 @@ window.onload = function(){
       }
       var orderQty = [$("qty1"),$("qty2"),$("qty3")];
 
-         orderQty.forEach(function(entry){
-            if(entry.value === "0"){
-               entry.classList.add("error");
-            }else{
-              entry.classList.remove("error");
-            }
+      orderQty.forEach(function(entry){
+         if(entry.value === "0"){
+            entry.classList.add("error");
+         }else{
+           entry.classList.remove("error");
+         }
 
-            if(isNaN(entry.value)){
-               console.log("Please enter a number.");
-               entry.classList.add("error");
-               entry.value = "0";
-            }else{
-              entry.classList.remove("error");
-            }
-         });
+         if(isNaN(entry.value)){
+            console.log("Please enter a number.");
+            entry.classList.add("error");
+            entry.value = "0";
+         }else{
+           entry.classList.remove("error");
+         }
+      });
 
       if (document.getElementsByClassName("error").length === 0){
          document.orders.submit();
       }else{
-         console.log("nope nope nope nope nope nope")
+         console.log("nope nope nope nope nope nope");
       }
       
    }
