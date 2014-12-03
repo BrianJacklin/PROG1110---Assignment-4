@@ -35,3 +35,9 @@ select {font-size: 9pt}
 #pbuttons {text-align: center; margin-top: 5px}
 #pbuttons input {margin: 0px 10px; background-color: rgb(228,197,166);
                  width: 120px; text-align: center}
+
+
+.error{
+	border: 1px solid red !important;
+	background: yellow !important;
+}

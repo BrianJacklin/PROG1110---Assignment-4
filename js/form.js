@@ -52,11 +52,15 @@ window.onload = function(){
 
    function productCosts(){
       for(var i = 1;i <= 3;i++){
-       var qty = $("qty"+i).value,
-       price = $("price"+i).value,
-       cost = $("cost"+i);
+         var qty = $("qty"+i).value,
+         price = $("price"+i).value,
+         cost = $("cost"+i);
 
-       cost.value = (qty * price).toFixed(2);
+         cost.value = (qty * price).toFixed(2);
+
+         if(isNaN(cost.value)){
+            cost.value = 0;
+         }
       }
    }
 
@@ -94,35 +98,58 @@ window.onload = function(){
          var cost = [$("cost"+i).value];
 
          amount += parseFloat(cost[j]);
-         tax.value = (amount * taxRate).toFixed(2);
+         tax.value = (amount * taxRate).toFixed(2); // set tax rate above in global variables
       }
    }
 
 // TO DO
    function validateForm(){
-      console.log("validated");
+
+      if(shipChoice.value <= 0){
+         shippingOption.classList.add("error");
+      }else{
+         shippingOption.classList.remove("error");
+      }
+      var orderQty = [$("qty1"),$("qty2"),$("qty3")];
+
+         orderQty.forEach(function(entry){
+            if(entry.value === '0'){
+               entry.classList.add("error");
+               console.log("1")
+            }else{
+              entry.classList.remove("error");
+              console.log("1.1")
+            }
+
+            if(isNaN(entry.value)){
+               entry.classList.add("error");
+               console.log("2")
+            }else{
+              entry.classList.remove("error");
+              console.log("2.1")
+            }
+         })
+      if (document.getElementsByClassName("error").length === 0){
+         document.orders.submit();
+      }
+      
    }
 
-   $("submit").onclick = function(){
-      validateForm();
-   }
+   $("submitForm").addEventListener("click",validateForm, false);
 
 // TO DO
    function resetForm(){
-      console.log('reset');
+      document.orders.reset();
+      todayTxt();
    }
 
-   $("reset").onclick = function(){
-      resetForm();
-   }
+  $("resetForm").addEventListener("click",resetForm, false);
 
    orders.onchange = function(){
       productCosts();
       calcCost();
       shipExpense();
       calcTotal();
-            todayTxt();
-
    }
 
    function initForm(){
