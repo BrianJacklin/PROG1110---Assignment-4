@@ -59,7 +59,7 @@ window.onload = function(){
          cost.value = (qty * price).toFixed(2);
 
          if(isNaN(cost.value)){
-            cost.value = 0;
+            cost.value = '0.00';
          }
       }
    }
@@ -113,24 +113,25 @@ window.onload = function(){
       var orderQty = [$("qty1"),$("qty2"),$("qty3")];
 
          orderQty.forEach(function(entry){
-            if(entry.value === '0'){
+            if(entry.value === "0"){
                entry.classList.add("error");
-               console.log("1")
             }else{
               entry.classList.remove("error");
-              console.log("1.1")
             }
 
             if(isNaN(entry.value)){
+               console.log("Please enter a number.");
                entry.classList.add("error");
-               console.log("2")
+               entry.value = "0";
             }else{
               entry.classList.remove("error");
-              console.log("2.1")
             }
-         })
+         });
+
       if (document.getElementsByClassName("error").length === 0){
          document.orders.submit();
+      }else{
+         console.log("nope nope nope nope nope nope")
       }
       
    }
@@ -141,7 +142,7 @@ window.onload = function(){
    function resetForm(){
       document.orders.reset();
       todayTxt();
-   };
+   }
 
   $("resetForm").addEventListener("click",resetForm, false);
 

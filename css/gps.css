@@ -41,3 +41,10 @@ select {font-size: 9pt}
 	border: 1px solid red !important;
 	background: yellow !important;
 }
+
+#msg{
+	border: 1px solid red;
+	background: yellow;
+	padding: 10px;
+	display:none;
+}
