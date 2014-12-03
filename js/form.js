@@ -141,7 +141,7 @@ window.onload = function(){
    function resetForm(){
       document.orders.reset();
       todayTxt();
-   }
+   };
 
   $("resetForm").addEventListener("click",resetForm, false);
 
@@ -150,7 +150,7 @@ window.onload = function(){
       calcCost();
       shipExpense();
       calcTotal();
-   }
+   };
 
    function initForm(){
       //Display Date
@@ -158,4 +158,4 @@ window.onload = function(){
    }
    //initialize the form after everything has loaded.
    initForm();
-}
+};
