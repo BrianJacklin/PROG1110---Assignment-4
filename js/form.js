@@ -1,3 +1,5 @@
+var test = "This is just a test for BitHound"; // to be removed. 
+
 /*
    Author:
    Date:
