@@ -1,13 +1,14 @@
 window.onload = function(){
    //Globals 
-   var $              = function(id){return document.getElementById(id);},
+   var $              = function(id){return document.getElementById(id);}, // grab ID's with less effort
        orders         = $("orders"),
        shippingOption = $("shipping"),
        shipChoice     = $("shipcost"),
        today          = new Date(),
        display        = $("date"),
        taxRate        = 0.05,
-       total          = $("total");
+       total          = $("total"),
+       counter        = false;
 
    function todayTxt() {
       display.value = today.getMonth() + 1 + "-" + today.getDate() + "-" + today.getFullYear();
@@ -21,23 +22,23 @@ window.onload = function(){
 
          cost.value = (qty * price).toFixed(2);
 
-         if(isNaN(cost.value)){
+         if(isNaN(qty) || qty <= 0){
             cost.value = '0.00';
          }
+         
       }
    }
 
    function shipExpense(){
-         if (shippingOption.value === '4.95'){
-            shipChoice.value = 4.95;
-         }else if(shippingOption.value === '8.95'){
-            shipChoice.value = 8.95;
-         }else if(shippingOption.value === '12.95'){
-            shipChoice.value = 12.95;
-         }else{
-            // default behaviour
-            shipChoice.value = '0.00';
-         }
+      if (shippingOption.value === '4.95'){
+         shipChoice.value = 4.95;
+      }else if(shippingOption.value === '8.95'){
+         shipChoice.value = 8.95;
+      }else if(shippingOption.value === '12.95'){
+         shipChoice.value = 12.95;
+      }else{
+         shipChoice.value = '0.00';
+      }
    }
 
    function calcTotal(){
@@ -50,58 +51,62 @@ window.onload = function(){
       } 
    }
 
-// TO DO
-   function calcShipping(){
-        
-   }
-
    function calcCost(){
       for(var i = 1,j = 0,amount = 0;i <= 3;i++){
          var tax = $("tax");
          var cost = [$("cost"+i).value];
 
          amount += parseFloat(cost[j]);
-         tax.value = (amount * taxRate).toFixed(2); // set tax rate above in global variables
+         tax.value = (amount * taxRate).toFixed(2);
       }
    }
 
-// TO DO
    function validateForm(){
-
-      if(shipChoice.value <= 0){
-         shippingOption.classList.add("error");
-      }else{
-         shippingOption.classList.remove("error");
-      }
       var orderQty = [$("qty1"),$("qty2"),$("qty3")];
 
-      orderQty.forEach(function(entry){
-         if(entry.value === "0"){
-            entry.classList.add("error");
-         }else{
-           entry.classList.remove("error");
-         }
+      // Check shipping
+      if(shipChoice.value <= 0){
+         shippingOption.classList.add("error");
+         alert("Please select a shipping option.");
+      }else{
+         shippingOption.classList.remove("error");
+         counter = true;
+      }
 
-         if(isNaN(entry.value)){
-            console.log("Please enter a number.");
-            entry.classList.add("error");
-            entry.value = "0";
+      // check if field NaN or 0 add/remove error style as required
+      orderQty.forEach(function(qty){
+         if(qty.value <= 0 || qty.value <= "0" ){
+            qty.classList.add("error");
+            qty.value = 0;
+         }else if(isNaN(qty.value)){
+            alert("Enter a valid number in at least one quantity field.");
+            qty.classList.add("error");
+            qty.value = 0;
          }else{
-           entry.classList.remove("error");
+           qty.classList.remove("error");
+           counter = true;
          }
       });
 
-      if (document.getElementsByClassName("error").length === 0){
-         document.orders.submit();
+      // check if at least 1 field is filled out
+      if($("qty1").value === "0" && $("qty2").value === "0" && $("qty3").value === "0"){
+         alert("Enter at least one valid quantity.");
       }else{
-         console.log("nope nope nope nope nope nope");
+         $("qty1").classList.remove("error");
+         $("qty2").classList.remove("error");
+         $("qty3").classList.remove("error");
       }
-      
+        
+   }
+   function submitForm(){
+      validateForm();
+      if (document.getElementsByClassName("error").length === 0 && counter === true){
+         document.orders.submit();
+      }
    }
 
-   $("submitForm").addEventListener("click",validateForm, false);
+   $("submitForm").addEventListener("click",submitForm, false);
 
-// TO DO
    function resetForm(){
       document.orders.reset();
       todayTxt();
@@ -114,12 +119,12 @@ window.onload = function(){
       calcCost();
       shipExpense();
       calcTotal();
+      validateForm();
    };
 
    function initForm(){
-      //Display Date
       todayTxt();
    }
-   //initialize the form after everything has loaded.
+
    initForm();
 };
